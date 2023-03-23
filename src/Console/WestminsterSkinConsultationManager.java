@@ -79,48 +79,46 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         {
             if (Doctor.getDocCount() <= 10)
             {
-//                LocalDate TestDate1 = Person.stringToLocalDate("23/05/2001");
-//                docArray.add(new Doctor("Kumara", "Gunarathnam", TestDate1, "077552176", "312453w", "Cosmetic dermatology"));
-//                docArray.add(new Doctor("Saman", "Kumara", TestDate1, "077552176", "444887r", "Paediatric dermatology"));
-//                docArray.add(new Doctor("Jinadasa", "Thalaguli", TestDate1, "077552176", "102293y", "Medical dermatology"));
-//                docArray.add(new Doctor("Somapala", "Piyadasa", TestDate1, "077552176", "664282w", "Cosmetic dermatology"));
-//                docArray.add(new Doctor("Piyadasa", "Somapala", TestDate1, "077552176", "337888k", "Medical dermatology"));
-//                docArray.add(new Doctor("Gunapala", "Somaratne", TestDate1, "077552176", "133132i", "Medical dermatology"));
+                boolean inValidInput = true;
+                while (inValidInput)
+                {
+                    printDollars();
 
-                printDollars();
+                    System.out.print("Enter the first name : ");
+                    String firstName = userIn.nextLine();
+                    inValidInput = validateNamesIn(firstName);
+                    if (inValidInput)
+                        continue;
 
-                System.out.print("Enter the first name : ");
-                String firstName = userIn.nextLine();
-                validateNamesIn(firstName);
-                System.out.println("aaaaaaaaaa"+firstName);
+                    System.out.print("Enter the surname : ");
+                    String surname = userIn.nextLine();
+                    inValidInput = validateNamesIn(surname);
+                    if (inValidInput)
+                        continue;
 
-                System.out.print("Enter the surname : ");
-                String surname = userIn.nextLine();
-                validateNamesIn(surname);
-                System.out.println("aaaaaaaaaa"+surname);
-
-                System.out.print("Enter the Date of Birth(like 30/09/1995) : ");
-                String dobString = userIn.nextLine();
-                LocalDate TestDate = Person.stringToLocalDate(dobString);
-                System.out.println("aaaaaaaaaa"+dobString);
+                    System.out.print("Enter the Date of Birth(like 30/09/1995) : ");
+                    String dobString = userIn.nextLine();
+                    LocalDate TestDate = Person.stringToLocalDate(dobString);
 
 
-                System.out.print("Enter the mobile number : ");
-                String mobileNumber = userIn.nextLine();
-                validateMobileNum(mobileNumber);
-                System.out.println("aaaaaaaaaa"+mobileNumber);
+                    System.out.print("Enter the mobile number : ");
+                    String mobileNumber = userIn.nextLine();
+                    inValidInput = validateMobileNum(mobileNumber);
+                    if (inValidInput)
+                        continue;
 
-                System.out.print("Enter the Medical License Number : ");
-                String medicalLicenceNum = userIn.nextLine();
-                System.out.println("aaaaaaaaaa"+medicalLicenceNum);
+                    System.out.print("Enter the Medical License Number : ");
+                    String medicalLicenceNum = userIn.nextLine();
 
-                System.out.print("Enter the Specialisation : ");
-                String specialisation = userIn.nextLine();
-                System.out.println("aaaaaaaaaa"+specialisation);
+                    System.out.print("Enter the Specialisation : ");
+                    String specialisation = userIn.nextLine();
 
-                Doctor doctor = new Doctor(firstName, surname, TestDate, mobileNumber, medicalLicenceNum, specialisation);
-                docArray.add(doctor); 
-                System.out.println("Successfully Added a Doctor to the System!");
+                    Doctor doctor = new Doctor(firstName, surname, TestDate, mobileNumber, medicalLicenceNum, specialisation);
+                    docArray.add(doctor);
+                    System.out.println("Successfully Added a Doctor to the System!");
+                    inValidInput = false;
+                }
+
             } else
             {
                 System.out.println("Cannot add more than 10 Doctors! Please remove a Doctor in order to add a new Doctor.");
@@ -248,13 +246,13 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
         System.out.println("GUI Launched Successfully!");
     }
 
-    public static void validateNamesIn(String name)
+    public static boolean validateNamesIn(String name)
     {
         char[] nameChars = name.toCharArray();
         if (nameChars.length == 0)
         {
             System.out.println("Please type a name!");
-            westMain.addDoctor();
+            return true;
         }
         else
         {
@@ -263,43 +261,45 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 if (Character.isDigit(character))
                 {
                     System.out.println("Names cannot have numbers!");
-                    westMain.addDoctor();
+                    return true;
                 }
                 else if (Character.isWhitespace(character))
                 {
                     System.out.println("Please input a name without whitespaces!");
-                    westMain.addDoctor();
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public static void validateMobileNum(String mobNumString)
+    public static boolean validateMobileNum(String mobNumString)
     {
         char[] mobNumChars = mobNumString.toCharArray();
         if (mobNumChars.length == 0)
         {
             System.out.println("Please type a Mobile Number!");
-            westMain.addDoctor();
+            return true;
         }
         for (char character : mobNumChars)
         {
             if (Character.isWhitespace(character))
             {
                 System.out.println("Please input a Mobile Number without whitespaces!");
-                westMain.addDoctor();
+                return true;
             }
             else if (!Character.isDigit(character))
             {
                 System.out.println("Mobile Numbers cannot have letters!");
-                westMain.addDoctor();
+                return true;
             }
         }
         if (mobNumChars.length != 10)
         {
             System.out.println("Mobile number should have 10 numbers!");
-            westMain.addDoctor();
+            return true;
         }
+        return false;
     }
 }
 
