@@ -4,6 +4,7 @@ Patient notes and images can be added to the system to be viewed by the doctors.
 
 ## Features
 - Simple and reliable User Interface for managing consultations
+- Thorough input validation throughout the app
 - Ability to check availability of doctors at a given time
 - Ability to automatically detect clashing consultations 
 - AES Encryption to safeguard the privacy of user data
